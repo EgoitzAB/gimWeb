@@ -152,3 +152,39 @@ class BrokenLinkTest(TestCase):
         response = self.client.get(reverse('home'))
         # Verifica que no haya enlaces rotos en la página
         self.assertNotContains(response, '404 Not Found')
+
+
+class FooterViewTests(TestCase):
+    
+    def test_footer_content(self):
+        response = self.client.get(reverse('home'))
+        self.assertEqual(response.status_code, 200)
+        
+        # Verifica que el footer tiene la sección de contacto
+        self.assertContains(response, "Dónde nos puedes encontrar")
+        self.assertContains(response, "Calle Rodríguez Fabrés, 23 bajo")
+        self.assertContains(response, "Telefono: 923241535 - 652928976")
+        
+        # Verifica que el footer tiene los enlaces de navegación
+        self.assertContains(response, "Principal")
+        self.assertContains(response, "Actividades")
+        self.assertContains(response, "Horarios")
+        self.assertContains(response, "Equipo")
+        
+        # Verifica que el footer tiene el enlace a la política de privacidad
+        self.assertContains(response, "Condiciones de privacidad")
+
+
+    def test_footer_links(self):
+        response = self.client.get(reverse('home'))
+        
+        # Enlace de formulario de contacto
+        self.assertContains(response, 'href="https://gimnasiosantamonica.com/contacto/"')
+        
+        # Enlace a la política de privacidad
+        self.assertContains(response, 'href="https://gimnasiosantamonica.com/politica-privacidad"')
+        
+        # Enlaces de navegación
+        self.assertContains(response, 'href="https://gimnasiosantamonica.com/actividades/"')
+        self.assertContains(response, 'href="https://gimnasiosantamonica.com/horarios/"')
+        self.assertContains(response, 'href="https://gimnasiosantamonica.com/equipo/"')

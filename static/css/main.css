@@ -4,7 +4,7 @@
     --rojo: #ff0000;        /* Rojo */
     --naranja: #ffa500;     /* Naranja */
     --amarillo: #ffff00;    /* Amarillo */
-    --negro: #000000;       /* Negro */
+    --negro: #0000002f;       /* Negro */
 
     /* Colores intermedios */
     --rojo-naranja: #ff4500;   /* Rojo-naranja */
@@ -33,11 +33,11 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 15px 20px;
     transition: background-color 0.3s;
-    position: fixed;
+    position: relative;
     width: 100%;
-    height: auto;
+    min-height: 10%;
     top: 0;
     left: 0;
     z-index: 10;
@@ -127,7 +127,7 @@ a {
         width: 75%; /* Ajusta el ancho del offcanvas */
         height: 100%;
         padding-top: 60px; /* Espacio para que no se superponga al navbar */
-        transition: left 0.3s ease; /* Transición para el desplazamiento */
+        transition: left 0.5s ease; /* Transición para el desplazamiento */
     }
 
     .nav-links.active {
@@ -149,5 +149,99 @@ a {
     .logo {
         position: absolute;
         right: 20px;
+    }
+}
+
+/* Estilos del Footer */
+
+.footer {
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Estilos de las secciones */
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px;
+}
+
+.footer-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.footer-contact p,
+.footer-legal p {
+    margin: 5px 0;
+}
+
+/* Estilo de los enlaces para que coincidan con los del navbar */
+.footer a {
+    color: var(--naranja-amarillo); /* Ajustado al color de los enlaces en el navbar */
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: var(--amarillo); /* Ajuste de color para el hover, como en el navbar */
+}
+
+/* Estilos específicos para la lista de enlaces */
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li {
+    margin-bottom: 5px;
+}
+
+/* Enlace al mapa de Google con icono de flecha */
+.map-link {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.map-link a {
+    color: #ffbf00;
+    text-decoration: none;
+}
+
+.map-link a:hover {
+    color: #eeebe5;
+}
+
+/* Mapa responsivo */
+.footer-map iframe {
+    width: 100%;
+    height: 200px;
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-map {
+        order: -1; /* Coloca el mapa al principio */
+        width: 100%;
+    }
+
+    .footer-section {
+        width: 100%;
+    }
+
+    .footer-legal {
+        margin-top: 10px;
+        font-size: 14px;
     }
 }
