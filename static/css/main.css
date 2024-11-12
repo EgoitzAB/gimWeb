@@ -1,0 +1,153 @@
+/* Estilos generales */
+:root {
+    /* Colores principales */
+    --rojo: #ff0000;        /* Rojo */
+    --naranja: #ffa500;     /* Naranja */
+    --amarillo: #ffff00;    /* Amarillo */
+    --negro: #000000;       /* Negro */
+
+    /* Colores intermedios */
+    --rojo-naranja: #ff4500;   /* Rojo-naranja */
+    --naranja-amarillo: #ffbf00; /* Naranja-amarillo */
+    --amarillo-negro: #808000;  /* Amarillo-negro (verde oliva) */
+    --rojo-negro: #800000;      /* Rojo-negro (burdeos) */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Estilos del Navbar */
+.navbar {
+    background-color: var(--negro);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+    position: fixed;
+    width: 100%;
+    height: auto;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+/* Logo */
+.logo a {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Enlaces del Navbar */
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    color: var(--amarillo);
+    font-size: 18px;
+    text-transform: uppercase;
+    padding-bottom: 5px;
+    position: relative;
+    display: inline-block;
+}
+
+.nav-link:hover {
+    color: var(--naranja-amarillo);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(to right, red, yellow);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+/* Hamburger Icon */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 11;
+}
+
+.hamburger .bar {
+    width: 30px;
+    height: 4px;
+    background-color: var(--amarillo-negro);
+}
+
+.hamburger.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Estilos para cuando se hace scroll */
+.navbar.scrolled {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Media Query para pantallas pequeñas */
+@media (max-width: 768px) {
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: -100%;
+        background-color: var(--negro);
+        width: 75%; /* Ajusta el ancho del offcanvas */
+        height: 100%;
+        padding-top: 60px; /* Espacio para que no se superponga al navbar */
+        transition: left 0.3s ease; /* Transición para el desplazamiento */
+    }
+
+    .nav-links.active {
+        left: 0; /* Hace que el menú se deslice desde la izquierda */
+    }
+
+    .nav-link {
+        color: var(--amarillo);
+        padding: 10px 20px;
+    }
+
+    .hamburger {
+        display: flex;
+        position: absolute;
+        left: 20px;
+        z-index: 11;
+    }
+
+    .logo {
+        position: absolute;
+        right: 20px;
+    }
+}
