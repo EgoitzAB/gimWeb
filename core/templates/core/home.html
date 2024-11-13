@@ -1,5 +1,21 @@
 {% extends 'pages/base.html' %}
+{% load static %}
 
 {% block content %}
-    
+    <!-- Título principal -->
+    <div class="main-title">
+        <h1>Kickboxing Center Salamanca</h1>
+    </div>
+
+    <!-- Contenedor de cuadrícula -->
+    <section class="grid-container">
+        {% for item in secciones %}
+            <div class="grid-item">
+                <!-- Descripción en el centro -->
+                <div class="description">{{ item.contenido|default:item.titulo }}</div>
+                <!-- Imagen de fondo con zoom al hacer hover -->
+                <div class="image" style="background-image: url('{{ item.imagenes.first.imagen.url }}');"></div>
+            </div>
+        {% endfor %}
+    </section>
 {% endblock content %}

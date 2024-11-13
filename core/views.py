@@ -8,4 +8,5 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['secciones'] = Seccion.objects.all()
+        print(context['secciones'])
         return context

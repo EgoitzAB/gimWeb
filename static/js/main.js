@@ -28,3 +28,24 @@ window.onscroll = function() {
         navbar.classList.remove('scrolled');
     }
 };
+
+document.addEventListener('DOMContentLoaded', function() {
+    const items = document.querySelectorAll('.grid-item');
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Añadir la clase 'visible' cuando el elemento entra en la pantalla
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.5 // El 50% del elemento debe estar visible
+    });
+
+    // Observa cada elemento de la cuadrícula
+    items.forEach(item => {
+        observer.observe(item);
+    });
+});

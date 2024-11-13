@@ -128,6 +128,7 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Hacer que las imagenes generadas por los tests no se guarden en la base de datos
 if 'test' in sys.argv:

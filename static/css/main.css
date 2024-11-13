@@ -4,7 +4,7 @@
     --rojo: #ff0000;        /* Rojo */
     --naranja: #ffa500;     /* Naranja */
     --amarillo: #ffff00;    /* Amarillo */
-    --negro: #0000002f;       /* Negro */
+    --negro: #000000dc;       /* Negro */
 
     /* Colores intermedios */
     --rojo-naranja: #ff4500;   /* Rojo-naranja */
@@ -37,7 +37,7 @@ a {
     transition: background-color 0.3s;
     position: relative;
     width: 100%;
-    min-height: 10%;
+    min-height: 6rem;
     top: 0;
     left: 0;
     z-index: 10;
@@ -113,6 +113,7 @@ a {
 /* Estilos para cuando se hace scroll */
 .navbar.scrolled {
     background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
 }
 
 /* Media Query para pantallas pequeñas */
@@ -152,6 +153,105 @@ a {
     }
 }
 
+.main-title h1 {
+    color: var(--rojo);
+    text-align: center;
+    font-size: 2.5rem;
+    margin-top: 6rem;
+    margin-bottom: 6rem;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    max-width: 100%;
+    margin: 40px auto;
+    padding: 0;
+}
+
+.grid-item {
+    position: relative;
+    background-color: var(--rojo);
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 8px;
+    opacity: 0; /* Inicialmente oculto */
+    transform: translateX(100px); /* Empuja los elementos fuera de la pantalla */
+    transition: opacity 0.3s ease, transform 0.5s ease; /* Transición suave */
+    margin: 0;
+}
+
+/* Añadir animación cuando el elemento esté en pantalla */
+.grid-item.visible {
+    opacity: 1; /* Hace que el elemento sea visible */
+    transform: translateX(0); /* Desliza el elemento a su posición original */
+}
+
+.grid-item:nth-child(odd) {
+    transform: translateX(-100px); /* Empuja los elementos impares hacia la izquierda */
+}
+
+.grid-item .description {
+    font-size: 1.2rem;
+    color: var(--amarillo);
+    text-align: center;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+}
+
+.grid-item .image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transform: scale(0.7);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
+    z-index: 1;
+}
+
+.grid-item:hover .image {
+    transform: scale(1); /* Efecto de zoom */
+    opacity: 1; /* La imagen aparece desde atrás */
+}
+
+.grid-item:hover .description {
+    opacity: 0; /* El texto desaparece cuando se hace hover */
+}
+
+/* Cuando se hace hover, hacer que un elemento crezca y los otros encojan */
+.grid-item:hover {
+    transform: scaleX(1.3);  /* Aumenta el tamaño del elemento */
+    z-index: 4;
+}
+
+.grid-item:not(:hover) {
+    transform: scaleX(1);  /* Los demás elementos se encojen */
+}
+
+/* Asegurarse de que los siguientes 3 elementos se encojan cuando uno crece */
+.grid-item:hover ~ .grid-item {
+    transform: scaleX(0.9);  /* Los elementos a la derecha se encojen en el eje X */
+}
+
+@media (max-width: 1024px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr); /* En pantallas medianas, dos columnas */
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr; /* Apilar los elementos en pantallas pequeñas */
+    }
+}
 /* Estilos del Footer */
 
 .footer {
@@ -199,7 +299,17 @@ a {
 }
 
 .footer-links ul li {
-    margin-bottom: 5px;
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    text-decoration: none;  /* Quitar subrayado de los enlaces */
+    font-size: 1rem;
+    transition: color 0.3s ease;  /* Suavizar el cambio de color al pasar el mouse */
+}
+
+.footer-links a:hover {
+    color: var(--rojo);  /* Cambiar color al hacer hover (puedes poner el color que prefieras) */
 }
 
 /* Enlace al mapa de Google con icono de flecha */
