@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Seccion, ImagenSeccion
+from .models import Seccion, ImagenSeccion, Horario
 
 class ImagenSeccionInline(admin.TabularInline):
     model = ImagenSeccion
@@ -20,3 +20,10 @@ class SeccionAdmin(admin.ModelAdmin):
 
 # Registrar el modelo en el admin
 admin.site.register(Seccion, SeccionAdmin)
+
+class HorarioAdmin(admin.ModelAdmin):
+    list_display = ('dia', 'actividad', 'hora_inicio', 'hora_fin')
+    list_filter = ('dia',)
+    search_fields = ('actividad',)
+
+admin.site.register(Horario, HorarioAdmin)

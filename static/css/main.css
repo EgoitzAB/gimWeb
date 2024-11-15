@@ -21,6 +21,9 @@
 
 body {
     font-family: Arial, sans-serif;
+    line-height: 1.6;
+    padding: 0;
+    background-color: #f4f4f9;
 }
 
 a {
@@ -50,10 +53,12 @@ a {
     font-weight: bold;
 }
 
+
 /* Enlaces del Navbar */
 .nav-links {
     display: flex;
     gap: 20px;
+    transition: left 0.3s ease;
 }
 
 .nav-link {
@@ -62,7 +67,6 @@ a {
     text-transform: uppercase;
     padding-bottom: 5px;
     position: relative;
-    display: inline-block;
 }
 
 .nav-link:hover {
@@ -148,17 +152,34 @@ a {
     }
 
     .logo {
-        position: absolute;
-        right: 20px;
+        display: flex;
+        justify-content: flex-end;
+        flex: 1;
     }
 }
 
+.main-title {
+    display: flex;
+    align-items: center; /* Alinea verticalmente al centro */
+    justify-content: space-around; /* Centra el contenido horizontalmente */
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    flex-wrap: nowrap;
+}
+
+/* Estilo para la imagen del logo */
+.logo {
+    width: 50px; /* Ajusta el tamaño según necesites */
+    height: auto;
+    margin-right: 15px; /* Espacio entre el logo y el texto */
+}
+
+/* Estilo para el título */
 .main-title h1 {
-    color: var(--rojo);
-    text-align: center;
-    font-size: 2.5rem;
-    margin-top: 6rem;
-    margin-bottom: 6rem;
+    font-size: 2em;
+    color: var(--rojo-naranja);
+    margin: 0; /* Elimina cualquier margen adicional */
+    line-height: 1; /* Asegura una alineación precisa */
 }
 
 .grid-container {
@@ -236,11 +257,6 @@ a {
     transform: scaleX(1);  /* Los demás elementos se encojen */
 }
 
-/* Asegurarse de que los siguientes 3 elementos se encojan cuando uno crece */
-.grid-item:hover ~ .grid-item {
-    transform: scaleX(0.9);  /* Los elementos a la derecha se encojen en el eje X */
-}
-
 @media (max-width: 1024px) {
     .grid-container {
         grid-template-columns: repeat(2, 1fr); /* En pantallas medianas, dos columnas */
@@ -251,7 +267,29 @@ a {
     .grid-container {
         grid-template-columns: 1fr; /* Apilar los elementos en pantallas pequeñas */
     }
+
+    .main-title {
+        flex-direction: column; /* Cambia la dirección del contenedor a columna */
+        text-align: center; /* Centra el texto */
+    }
+
+    .logo {
+        width: 40px; /* Reduce el tamaño del logo en pantallas pequeñas */
+        margin: 0 0 10px 0;
+        justify-content: flex-end;
+    }
+
+    .main-title h1 {
+        font-size: 1.5em; /* Reduce ligeramente el tamaño de la fuente en pantallas pequeñas */
+    }
 }
+
+
+/* Espaciado en las secciones */
+#actividades, #horario {
+    margin-bottom: 30px;
+}
+
 /* Estilos del Footer */
 
 .footer {
@@ -354,4 +392,173 @@ a {
         margin-top: 10px;
         font-size: 14px;
     }
+}
+
+
+/* Estilo de la Sección de Actividades */
+#actividades {
+    padding: 40px 20px;
+    background-color: #f4f4f9;
+    text-align: center;
+}
+
+#actividades h2 {
+    font-size: 2.5rem;
+    color: var(--rojo);
+    margin-bottom: 20px;
+}
+
+#actividades p {
+    font-size: 1.2rem;
+    color: var(--negro);
+    margin-bottom: 30px;
+}
+
+/* Estilo de las Actividades */
+.actividades-contenido {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap; /* Permite que los elementos se acomoden en una nueva fila si no caben */
+}
+
+.actividad {
+    background-color: var(--rojo-negro);
+    color: var(--amarillo);
+    padding: 20px;
+    border-radius: 10px;
+    width: 30%;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.actividad:hover {
+    transform: translateY(-10px); /* Efecto hover para resaltar */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.actividad h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.actividad p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.enlace-actividad {
+    text-decoration: none;
+    color: var(--amarillo);
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.enlace-actividad:hover {
+    color: var(--naranja-amarillo);
+}
+
+/* Estilo para la sección de Metodología */
+#metodologia {
+    background-color: var(--amarillo-negro);
+    padding: 40px 20px;
+    color: white;
+    text-align: center;
+}
+
+#metodologia h3 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+#metodologia p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+/* Estilos para los enlaces de material adicional */
+#metodologia ul {
+    list-style: none;
+    padding: 0;
+}
+
+#metodologia ul li {
+    margin-bottom: 10px;
+}
+
+#metodologia ul li a {
+    color: var(--naranja-amarillo);
+    font-size: 1.1rem;
+    text-decoration: none;
+}
+
+#metodologia ul li a:hover {
+    color: var(--amarillo);
+}
+
+
+/* SECCIÓN HORARIOS */
+
+/* Estilo de la sección de horario */
+#horario {
+    padding: 20px;
+    background-color: #f4f4f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para la tabla de horarios */
+.horarios-cuadricula {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #333;
+    color: #fff;
+}
+
+td {
+    min-width: 120px;
+    vertical-align: top;
+    position: relative;
+}
+
+.hora {
+    font-weight: bold;
+}
+
+.actividad {
+    background-color: #ffbf00;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #000;
+}
+
+/* Botón para descarga en PDF */
+#descargar-pdf {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#descargar-pdf:hover {
+    background-color: #ff4500;
 }

@@ -4,7 +4,9 @@
 {% block content %}
     <!-- Título principal -->
     <div class="main-title">
-        <h1>Kickboxing Center Salamanca</h1>
+        <!-- Imagen en formato AVIF y título -->
+        <img src="{% static 'images/kickboxing.avif' %}" alt="Kickboxing Center Logo" class="logo-gim">
+        <h1 class="titulo-gim">Kickboxing Center Salamanca</h1>
     </div>
 
     <!-- Contenedor de cuadrícula -->
@@ -18,4 +20,112 @@
             </div>
         {% endfor %}
     </section>
+<!-- Sección de Actividades -->
+<section id="actividades">
+    <h2>Actividades</h2>
+    <p>Aquí puedes encontrar las diferentes actividades que ofrecemos en nuestro centro de entrenamiento. Desde clases de iniciación hasta entrenamientos avanzados, tenemos opciones para todos los niveles.</p>
+
+    <!-- Contenido adicional o descripción más detallada -->
+    <div class="actividades-contenido">
+        <div class="actividad">
+            <h3>Boxeo</h3>
+            <p>Entrenamiento de boxeo para todos los niveles. Aprenderás desde las bases hasta técnicas avanzadas.</p>
+            <a href="/actividades/boxeo" class="enlace-actividad">Ver más detalles</a>
+        </div>
+
+        <div class="actividad">
+            <h3>Kickboxing</h3>
+            <p>Clases de Kickboxing adaptadas a tu nivel. Entrena la combinación perfecta de fuerza, agilidad y resistencia.</p>
+            <a href="/actividades/kickboxing" class="enlace-actividad">Ver más detalles</a>
+        </div>
+
+        <div class="actividad">
+            <h3>Fitness</h3>
+            <p>Rutinas de entrenamiento funcional para mejorar tu resistencia y estado físico general.</p>
+            <a href="/actividades/fitness" class="enlace-actividad">Ver más detalles</a>
+        </div>
+
+        <!-- Más actividades pueden agregarse aquí -->
+    </div>
+
+    <!-- Metodología de enseñanza -->
+    <section id="metodologia">
+        <h3>Metodología</h3>
+        <p>Nuestra metodología está basada en una combinación de entrenamiento físico, técnica, y estrategias de motivación. Cada sesión está diseñada para mejorar progresivamente la capacidad de nuestros alumnos, respetando su ritmo y nivel de habilidad.</p>
+
+        <p>Contamos con entrenadores especializados en cada disciplina para guiarte en cada paso del proceso.</p>
+
+        <!-- Enlaces y material adicional -->
+        <h4>Material adicional</h4>
+        <p>Consulta nuestros recursos en línea para mejorar tu entrenamiento:</p>
+        <ul>
+            <li><a href="/material/boxeo" target="_blank">Guía de técnicas de boxeo</a></li>
+            <li><a href="/material/kickboxing" target="_blank">Técnicas avanzadas de kickboxing</a></li>
+            <li><a href="/material/fitness" target="_blank">Rutinas de fitness personalizadas</a></li>
+        </ul>
+    </section>
+</section>
+
+<!-- Sección de Horario -->
+<section id="horario">
+    <h2>Horario</h2>
+    <p>A continuación, puedes consultar los horarios de las actividades y de atención en nuestro centro.</p>
+
+    <!-- Contenedor para la cuadrícula de horarios -->
+    <div class="horarios-cuadricula">
+        <table>
+            <!-- Fila de días -->
+            <thead>
+                <tr>
+                    <th>Hora/Día</th>
+                    {% for dia in horarios_por_dia %}
+                        <th>{{ dia }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filas de horas -->
+                {% for hora in horas %}
+                    <tr>
+                        <td class="hora">{{ hora }}</td>
+                        {% for dia, actividades in horarios_por_dia.items %}
+                            <td>
+                                {% for actividad in actividades %}
+                                    {% if actividad.hora_inicio|time:"H:i" == hora %}
+                                        <div class="actividad">{{ actividad.actividad }}</div>
+                                    {% endif %}
+                                {% empty %}
+                                    <div class="actividad">Libre</div>
+                                {% endfor %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Botón para descargar el horario en PDF -->
+    <button id="descargar-pdf" class="btn">Descargar Horario en PDF</button>
+</section>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    // Función para generar el PDF del horario
+    document.getElementById('descargar-pdf').addEventListener('click', function () {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(18);
+        doc.text('Horario de Actividades', 20, 20);
+
+        const horariosTexto = document.getElementById('horario').innerText;
+        doc.setFontSize(12);
+        doc.text(horariosTexto, 20, 30);
+        doc.save('horario-actividades.pdf');
+    });
+</script>
+
+
+
 {% endblock content %}

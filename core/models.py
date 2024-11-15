@@ -8,6 +8,7 @@ class Seccion(models.Model):
     titulo = models.CharField(max_length=300)
     contenido = models.TextField()
     orden = models.PositiveIntegerField()
+    publicado = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["orden"]
@@ -37,3 +38,22 @@ class ImagenSeccion(models.Model):
         
         self.imagen.name = os.path.splitext(self.imagen.name)[0] + ".avif"
         super().save()
+
+class Horario(models.Model):
+    DIA_CHOICES = [
+        ('Lunes', 'Lunes'),
+        ('Martes', 'Martes'),
+        ('Miércoles', 'Miércoles'),
+        ('Jueves', 'Jueves'),
+        ('Viernes', 'Viernes'),
+        ('Sábado', 'Sábado'),
+        ('Domingo', 'Domingo'),
+    ]
+    
+    dia = models.CharField(max_length=10, choices=DIA_CHOICES)
+    actividad = models.CharField(max_length=100)
+    hora_inicio = models.TimeField()
+    hora_fin = models.TimeField()
+
+    def __str__(self):
+        return f"{self.dia} - {self.actividad} ({self.hora_inicio} - {self.hora_fin})"
