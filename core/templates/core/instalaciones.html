@@ -1,0 +1,33 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+{% block content %}
+    <section id="instalaciones">
+        <h2>{{ instalacion.nombre }}</h2>
+        <p>{{ instalacion.descripcion }}</p>
+        <p><strong>Dirección:</strong> {{ instalacion.direccion }}</p>
+
+        <!-- Imagen de la instalación (si existe) -->
+        <img src="{% static 'images/'|add:instalacion.imagen %}" alt="{{ instalacion.nombre }}" class="instalacion-imagen">
+
+        <h3>Últimas Noticias</h3>
+        <div class="noticias">
+            {% for noticia in noticias %}
+                <div class="noticia">
+                    <h4>{{ noticia.titulo }}</h4>
+                    <p>{{ noticia.contenido|slice:":200" }}...</p>
+                    <p><em>Publicado el {{ noticia.fecha_publicacion|date:"d M Y" }}</em></p>
+
+                    {% if noticia.imagen %}
+                        <img src="{{ noticia.imagen.url }}" alt="{{ noticia.titulo }}" class="noticia-imagen">
+                    {% endif %}
+
+                    {% if noticia.enlace %}
+                        <a href="{{ noticia.enlace }}" target="_blank">Leer más</a>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <p>No hay noticias disponibles.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

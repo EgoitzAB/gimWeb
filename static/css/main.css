@@ -350,6 +350,28 @@ a {
     color: var(--rojo);  /* Cambiar color al hacer hover (puedes poner el color que prefieras) */
 }
 
+.footer-section.footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.footer-section.footer-social .social-icon {
+    font-size: 1.5rem;
+    color: #ff6600;
+    text-decoration: none;
+}
+
+.footer-section.footer-social .social-icon:hover {
+    color: var(--amarillo); /* Cambia el color al pasar el ratón */
+}
+
+.footer-section.footer-social .social-icon i {
+    margin-right: 5px;
+}
+
 /* Enlace al mapa de Google con icono de flecha */
 .map-link {
     margin-top: 5px;
@@ -546,6 +568,8 @@ td {
     border-radius: 5px;
     font-size: 14px;
     color: #000;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
 }
 
 /* Botón para descarga en PDF */
@@ -561,4 +585,40 @@ td {
 
 #descargar-pdf:hover {
     background-color: #ff4500;
+}
+
+
+/* PÁGINA DE INSTALACIONES */
+#instalaciones {
+    margin: 20px;
+}
+
+.instalacion-imagen {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+}
+
+.noticias {
+    margin-top: 40px;
+}
+
+.noticia {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.noticia img {
+    max-width: 100%;
+    height: auto;
+}
+
+.noticia a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.noticia a:hover {
+    text-decoration: underline;
 }

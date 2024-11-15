@@ -40,20 +40,23 @@ class ImagenSeccion(models.Model):
         super().save()
 
 class Horario(models.Model):
-    DIA_CHOICES = [
-        ('Lunes', 'Lunes'),
-        ('Martes', 'Martes'),
-        ('Miércoles', 'Miércoles'),
-        ('Jueves', 'Jueves'),
-        ('Viernes', 'Viernes'),
-        ('Sábado', 'Sábado'),
-        ('Domingo', 'Domingo'),
-    ]
-    
-    dia = models.CharField(max_length=10, choices=DIA_CHOICES)
+    dia = models.CharField(max_length=9, choices=[('Lunes', 'Lunes'), ('Martes', 'Martes'), ('Miércoles', 'Miércoles'), 
+                                                 ('Jueves', 'Jueves'), ('Viernes', 'Viernes'), ('Sábado', 'Sábado'), 
+                                                 ('Domingo', 'Domingo')])
     actividad = models.CharField(max_length=100)
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
 
     def __str__(self):
         return f"{self.dia} - {self.actividad} ({self.hora_inicio} - {self.hora_fin})"
+
+
+class Noticia(models.Model):
+    titulo = models.CharField(max_length=255)
+    contenido = models.TextField()
+    fecha_publicacion = models.DateTimeField(auto_now_add=True)
+    imagen = models.ImageField(upload_to='noticias/', null=True, blank=True)
+    enlace = models.URLField(null=True, blank=True)  # Si hay algún enlace relacionado
+
+    def __str__(self):
+        return self.titulo

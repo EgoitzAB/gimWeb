@@ -27,3 +27,12 @@ class HorarioAdmin(admin.ModelAdmin):
     search_fields = ('actividad',)
 
 admin.site.register(Horario, HorarioAdmin)
+
+from django.contrib import admin
+from .models import Noticia
+
+@admin.register(Noticia)
+class NoticiaAdmin(admin.ModelAdmin):
+    list_display = ['titulo', 'fecha_publicacion']
+    search_fields = ['titulo', 'contenido']
+    list_filter = ['fecha_publicacion']
