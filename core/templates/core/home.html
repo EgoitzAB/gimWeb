@@ -66,7 +66,6 @@
     </section>
 </section>
 
-<!-- Sección de Horario -->
 <section id="horario">
     <h2>Horario</h2>
     <p>A continuación, puedes consultar los horarios de las actividades y de atención en nuestro centro.</p>
@@ -78,25 +77,24 @@
             <thead>
                 <tr>
                     <th>Hora/Día</th>
-                    {% for dia in horarios_por_dia %}
+                    {% for dia in dias %}
                         <th>{{ dia }}</th>
                     {% endfor %}
                 </tr>
             </thead>
             <tbody>
                 <!-- Filas de horas -->
-                {% for hora in horas %}
+                {% for fila in tabla_horarios %}
                     <tr>
-                        <td class="hora">{{ hora }}</td>
-                        {% for dia, actividades in horarios_por_dia.items %}
+                        <td class="hora">{{ fila.hora }}</td>
+                        {% for actividades in fila.celdas %}
                             <td>
                                 {% for actividad in actividades %}
-                                    {% if actividad.hora_inicio|time:"H:i" == hora %}
-                                        <div class="actividad">{{ actividad.actividad }}</div>
-                                    {% endif %}
-                                {% empty %}
-                                    <div class="actividad">Libre</div>
+                                    <div class="actividad">{{ actividad.actividad }}</div>
                                 {% endfor %}
+                                {% if actividades|length == 0 %}
+                                    <div class="actividad">Libre</div>
+                                {% endif %}
                             </td>
                         {% endfor %}
                     </tr>
@@ -109,23 +107,50 @@
     <button id="descargar-pdf" class="btn">Descargar Horario en PDF</button>
 </section>
 
-
+<!-- Carga jsPDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Carga autoTable -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.26/jspdf.plugin.autotable.min.js"></script>
+
 <script>
-    // Función para generar el PDF del horario
-    document.getElementById('descargar-pdf').addEventListener('click', function () {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        doc.setFontSize(18);
-        doc.text('Horario de Actividades', 20, 20);
+   document.getElementById('descargar-pdf').addEventListener('click', function () {
+       const { jsPDF } = window.jspdf;
+       const doc = new jsPDF();
+       doc.setFontSize(18);
+       doc.text('Horario de Actividades', 20, 20);
 
-        const horariosTexto = document.getElementById('horario').innerText;
-        doc.setFontSize(12);
-        doc.text(horariosTexto, 20, 30);
-        doc.save('horario-actividades.pdf');
-    });
+       // Configuramos las columnas de la tabla
+       const horariosTexto = document.getElementById('horario');
+       const table = horariosTexto.querySelector('table');
+       
+       const rows = [];
+       table.querySelectorAll('tr').forEach(row => {
+           const rowData = [];
+           row.querySelectorAll('th, td').forEach(cell => {
+               rowData.push(cell.innerText);
+           });
+           rows.push(rowData);
+       });
+
+       // Establecer el formato de la tabla en PDF
+       doc.autoTable({
+           head: [rows[0]],  // Cabezera de la tabla (los días de la semana)
+           body: rows.slice(1),  // El resto de las filas (horarios y actividades)
+           startY: 30,  // Donde empieza la tabla
+           theme: 'striped',  // Tema con filas alternas sombreadas
+           headStyles: {
+               fillColor: [51, 51, 51], // Color de fondo de la cabecera
+               textColor: 255,  // Color del texto
+               fontSize: 12,  // Tamaño de fuente para los encabezados
+           },
+           margin: { top: 20, left: 10, right: 10 },  // Márgenes alrededor de la tabla
+           tableWidth: 'auto',  // Hacer que la tabla se ajuste automáticamente al ancho
+       });
+
+       // Guardar el PDF generado
+       doc.save('horario-actividades.pdf');
+   });
 </script>
-
-
 
 {% endblock content %}

@@ -1,0 +1,38 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+<section id="horario">
+    <h2>Horario de Actividades</h2>
+    
+    <table class="horarios-table">
+        <thead>
+            <tr>
+                <th>Hora/Día</th>
+                {% for dia in dias %}
+                    <th>{{ dia }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for fila in tabla_horarios %}
+                <tr>
+                    <td class="hora">{{ fila.hora }}</td>
+                    {% for actividades in fila.celdas %}
+                        <td>
+                            {% for actividad in actividades %}
+                                <div class="actividad">
+                                    {{ actividad.actividad }} ({{ actividad.hora_inicio|time:"H:i" }} - {{ actividad.hora_fin|time:"H:i" }})
+                                </div>
+                            {% endfor %}
+                            {% if not actividades %}
+                                <div class="actividad">Libre</div>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</section>
+{% endblock %}

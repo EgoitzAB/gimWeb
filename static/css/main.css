@@ -528,22 +528,36 @@ a {
     background-color: #f4f4f9;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: auto; /* Elimina la restricción de altura para no tener scroll */
+    overflow: hidden; /* Evita el scroll dentro de la sección */
+}
+
+/* Título de la sección con fondo negro y texto blanco */
+#horario h2 {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
 }
 
 /* Estilos para la tabla de horarios */
 .horarios-cuadricula {
-    overflow-x: auto;
     margin-top: 20px;
+    width: 100%;
+    overflow-x: auto; /* Permite que la tabla se ajuste horizontalmente */
 }
 
+/* Estilos generales de la tabla */
 table {
     width: 100%;
     border-collapse: collapse;
     text-align: center;
 }
 
+/* Estilo para las celdas de la tabla */
 th, td {
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #ddd;
 }
 
@@ -553,40 +567,83 @@ th {
 }
 
 td {
-    min-width: 120px;
+    min-width: 80px;
     vertical-align: top;
     position: relative;
+    font-size: 0.9rem; /* Ajuste para texto más pequeño */
 }
 
+/* Ajuste para la columna de horas */
 .hora {
     font-weight: bold;
+    font-size: 1rem;
 }
 
 .actividad {
     background-color: #ffbf00;
     padding: 5px;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 13px;
     color: #000;
-    margin-top: 2rem;
-    margin-bottom: 4rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
-/* Botón para descarga en PDF */
+/* Estilo para el botón de generar PDF */
 #descargar-pdf {
     margin-top: 20px;
-    padding: 10px 20px;
+    padding: 12px 20px;
     background-color: #333;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
 }
 
 #descargar-pdf:hover {
-    background-color: #ff4500;
+    background-color: #ff4500; /* Cambiar el color de fondo cuando se pasa el mouse */
 }
 
+/* Media query para pantallas más pequeñas */
+@media (max-width: 768px) {
+    /* Ajustar el tamaño de las celdas de la tabla en pantallas pequeñas */
+    td, th {
+        padding: 3px;
+        font-size: 0.8rem; /* Reducir el tamaño del texto */
+        min-width: 50px;
+    }
+
+    /* Ajustar la altura de la tabla */
+    #horario {
+        max-height: none; /* Quitar la restricción de altura */
+    }
+
+    /* Ajustar el tamaño del botón en pantallas pequeñas */
+    #descargar-pdf {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    td, th {
+        padding: 2px;
+        font-size: 0.7rem; /* Aún más pequeño el texto */
+        min-width: 30px;
+    }
+
+    .actividad {
+        font-size: 12px;
+    }
+
+    #descargar-pdf {
+        font-size: 0.8rem;
+    }
+}
 
 /* PÁGINA DE INSTALACIONES */
 #instalaciones {

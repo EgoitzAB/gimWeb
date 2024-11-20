@@ -1,7 +1,9 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
-from .models import Seccion, ImagenSeccion
+from .models import Seccion, ImagenSeccion, Horario
+from core.utils import generar_horario
+from datetime import time
 from PIL import Image
 import io
 import os
@@ -188,3 +190,66 @@ class FooterViewTests(TestCase):
         self.assertContains(response, 'href="https://gimnasiosantamonica.com/actividades/"')
         self.assertContains(response, 'href="https://gimnasiosantamonica.com/horarios/"')
         self.assertContains(response, 'href="https://gimnasiosantamonica.com/equipo/"')
+
+class GenerarHorarioTest(TestCase):
+    def setUp(self):
+        # Crear algunos objetos `Horario` de ejemplo
+        self.horario1 = Horario.objects.create(
+            dia='Lunes', actividad='Boxeo', 
+            hora_inicio=time(9, 0), hora_fin=time(11, 0)
+        )
+        self.horario2 = Horario.objects.create(
+            dia='Martes', actividad='Yoga', 
+            hora_inicio=time(10, 0), hora_fin=time(12, 0)
+        )
+        self.horario3 = Horario.objects.create(
+            dia='Miércoles', actividad='CrossFit', 
+            hora_inicio=time(18, 0), hora_fin=time(20, 0)
+        )
+
+    def test_generar_horario_estructura(self):
+        # Obtener los horarios creados
+        horarios = Horario.objects.all()
+
+        # Llamar a la función `generar_horario`
+        resultado = generar_horario(horarios)
+
+        # Verificar que los días están presentes
+        self.assertEqual(resultado['dias'], ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'])
+
+        # Verificar que las filas de horarios están estructuradas correctamente
+        self.assertTrue('tabla_horarios' in resultado)
+        self.assertGreater(len(resultado['tabla_horarios']), 0)  # Al menos una fila
+
+    def test_actividades_asignadas_correctamente(self):
+        # Obtener los horarios creados
+        horarios = Horario.objects.all()
+
+        # Llamar a la función `generar_horario`
+        resultado = generar_horario(horarios)
+
+        # Verificar que las actividades se asignan correctamente a sus días y horas
+        for fila in resultado['tabla_horarios']:
+            if fila['hora'] == '09:00':
+                lunes_celda = fila['celdas'][0]  # Primera columna (Lunes)
+                self.assertEqual(len(lunes_celda), 1)
+                self.assertEqual(lunes_celda[0].actividad, 'Boxeo')
+
+            if fila['hora'] == '10:00':
+                martes_celda = fila['celdas'][1]  # Segunda columna (Martes)
+                self.assertEqual(len(martes_celda), 1)
+                self.assertEqual(martes_celda[0].actividad, 'Yoga')
+
+            if fila['hora'] == '18:00':
+                miercoles_celda = fila['celdas'][2]  # Tercera columna (Miércoles)
+                self.assertEqual(len(miercoles_celda), 1)
+                self.assertEqual(miercoles_celda[0].actividad, 'CrossFit')
+
+    def test_horario_sin_actividades(self):
+        # Llamar a la función `generar_horario` sin horarios
+        resultado = generar_horario(Horario.objects.none())
+
+        # Verificar que la tabla de horarios está vacía
+        for fila in resultado['tabla_horarios']:
+            for celdas in fila['celdas']:
+                self.assertEqual(len(celdas), 0)  # No hay actividades en ninguna celda
